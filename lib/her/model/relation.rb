@@ -6,7 +6,7 @@ module Her
 
       # @private
       def initialize(parent)
-        @parent = parent
+        @parent = parent.clone
         @params = {}
       end
 
@@ -44,7 +44,6 @@ module Her
       # @private
       def method_missing(method, *args, &blk)
         if @parent.respond_to? method
-        	@parent = @parent.clone
 			    @parent.call_scopes(method, args.first)
 			  else
 				  fetch.send(method, *args, &blk)
