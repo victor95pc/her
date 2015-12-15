@@ -44,7 +44,8 @@ module Her
       # @private
       def method_missing(method, *args, &blk)
         if @parent.respond_to? method
-			    @parent.clone.call_scopes(method, args.first)
+        	@parent = @parent.clone
+			    @parent.call_scopes(method, args.first)
 			  else
 				  fetch.send(method, *args, &blk)
 			  end
