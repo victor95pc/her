@@ -71,20 +71,21 @@ module Her
       # Define matchers for attr? and attr= methods
       define_attribute_method_matchers
     end
-    
-    def self.method_missing(method_name, *arguments, &block)
-      if respond_to? method_name
-				call_scopes(method_name, arguments.first)
-			else
-				super
+    class_methods do
+	    def method_missing(method_name, *arguments, &block)
+	      if respond_to? method_name
+					call_scopes(method_name, arguments.first)
+				else
+					super
+				end
 			end
-		end
-
-		def self.call_scopes(scope, value)
-		  self.where_options ||= {}
-		  self.where_options[scope] = value
-		  
-		  where(where_options)
-		end
+	
+			def call_scopes(scope, value)
+			  self.where_options ||= {}
+			  self.where_options[scope] = value
+			  
+			  where(where_options)
+			end
+	end
   end
 end
