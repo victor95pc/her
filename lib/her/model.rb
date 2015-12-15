@@ -72,7 +72,7 @@ module Her
       define_attribute_method_matchers
     end
     
-    def method_missing(method_name, *arguments, &block)
+    def self.method_missing(method_name, *arguments, &block)
       if respond_to? method_name
 				call_scopes(method_name, arguments.first)
 			else
@@ -80,7 +80,7 @@ module Her
 			end
 		end
 
-		def call_scopes(scope, value)
+		def self.call_scopes(scope, value)
 		  self.where_options ||= {}
 		  self.where_options[scope] = value
 		  
