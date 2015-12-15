@@ -38,11 +38,16 @@ module Her
       end
       alias all where
 
-      # Bubble all methods to the fetched collection
+      # Bubble all methods to the fetched collection and try to get parent with the missing method,
+      # maybe this method is scope
       #
       # @private
       def method_missing(method, *args, &blk)
-        fetch.send(method, *args, &blk)
+        if @parent.respond_to? method_name
+			    @parent.call_scope(method_name, arguments.first)
+			  else
+				  fetch.send(method, *args, &blk)
+			  end
       end
 
       # @private
