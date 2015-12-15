@@ -71,7 +71,7 @@ module Her
       # Define matchers for attr? and attr= methods
       define_attribute_method_matchers
     end
-    class_methods do
+    module module ClassMethods
 	    def method_missing(method_name, *arguments, &block)
 	      if respond_to? method_name
 					call_scopes(method_name, arguments.first)
